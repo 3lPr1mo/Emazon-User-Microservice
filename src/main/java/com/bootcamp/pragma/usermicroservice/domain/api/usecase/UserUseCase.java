@@ -16,6 +16,9 @@ public class UserUseCase implements IUserServicePort {
 
     @Override
     public void createUser(User user) {
+        if(userPersistencePort.findById(user.getId()).isPresent()){
+            throw new UserAlreadyExistException(DomainConstants.USER_ALREADY_EXISTS + user.getId());
+        }
         if(userPersistencePort.findByEmail(user.getEmail()).isPresent()){
             throw new UserAlreadyExistException(DomainConstants.USER_ALREADY_EXISTS + user.getEmail());
         }
