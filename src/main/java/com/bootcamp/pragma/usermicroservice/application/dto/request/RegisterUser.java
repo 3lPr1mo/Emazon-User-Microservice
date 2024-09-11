@@ -2,13 +2,12 @@ package com.bootcamp.pragma.usermicroservice.application.dto.request;
 
 import com.bootcamp.pragma.usermicroservice.application.util.AuthConstants;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Date;
 
 @Builder
-public class RegisterAuxWarehouse {
+public class RegisterUser {
     @NotBlank(message = AuthConstants.ID_IS_REQUIRED_MSG)
     private Long id;
 
