@@ -52,5 +52,7 @@ public class UserBuilder {
         return this;
     }
 
-
+    public User build() {
+        return new User(id, firstname, lastname, email, phone, dateBirth, password, role);
+    }
 }
