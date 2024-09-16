@@ -2,13 +2,15 @@ package com.bootcamp.pragma.usermicroservice.application.dto.request;
 
 import com.bootcamp.pragma.usermicroservice.application.util.AuthConstants;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Date;
 
 @Builder
+@Getter
 public class RegisterUser {
-    @NotBlank(message = AuthConstants.ID_IS_REQUIRED_MSG)
+    @NotNull(message = AuthConstants.ID_IS_REQUIRED_MSG)
     private Long id;
 
     @NotBlank(message = AuthConstants.FIRST_NAME_IS_REQUIRED_MSG)
@@ -23,7 +25,6 @@ public class RegisterUser {
     @NotBlank(message = AuthConstants.PHONE_IS_REQUIRED_MSG)
     private String phone;
 
-    @NotBlank(message = AuthConstants.DATE_OF_BIRTH_IS_REQUIRED_MSG)
     private Date dateBirth;
 
     @NotBlank(message = AuthConstants.PASSWORD_IS_REQUIRED_MSG)
