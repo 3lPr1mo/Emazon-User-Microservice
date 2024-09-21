@@ -34,6 +34,10 @@ public class AuthController {
     }
 
     @PostMapping("login")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = SwaggerConstants.OK_STATUS_CODE , description = SwaggerConstants.USER_REGISTERED_SUCCESSFULLY_MSG),
+            @ApiResponse(responseCode = SwaggerConstants.BAD_REQUEST_STATUS_CODE, description = SwaggerConstants.BAD_REQUEST_MSG),
+    })
     public ResponseEntity<LoggedUserResponse> loginUser(@Valid @RequestBody LoginUser loginUser) {
         return ResponseEntity.status(HttpStatus.OK).body(authHandler.loginUser(loginUser));
     }
