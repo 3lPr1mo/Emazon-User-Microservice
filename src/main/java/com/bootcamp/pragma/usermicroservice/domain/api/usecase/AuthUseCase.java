@@ -7,6 +7,7 @@ import com.bootcamp.pragma.usermicroservice.domain.exception.PasswordDoNotMatchE
 import com.bootcamp.pragma.usermicroservice.domain.model.User;
 import com.bootcamp.pragma.usermicroservice.domain.spi.IAuthPersistencePort;
 import com.bootcamp.pragma.usermicroservice.domain.util.DomainConstants;
+import com.bootcamp.pragma.usermicroservice.domain.util.RoleContants;
 
 public class AuthUseCase implements IAuthServicePort {
 
@@ -22,7 +23,7 @@ public class AuthUseCase implements IAuthServicePort {
 
     @Override
     public void registerAuxWarehouse(User user) {
-        user.setRole(roleServicePort.findRoleByName("AUX_BODEGA"));
+        user.setRole(roleServicePort.findRoleByName(RoleContants.ROLE_AUX_WAREHOUSE));
         register(user);
     }
 
@@ -33,6 +34,18 @@ public class AuthUseCase implements IAuthServicePort {
             throw new PasswordDoNotMatchException(DomainConstants.PASSWORD_DOES_NOT_MATCH);
         }
         return authPersistencePort.loginUser(user);
+    }
+
+    @Override
+    public void registerAdmin(User user) {
+        user.setRole(roleServicePort.findRoleByName(RoleContants.ROLE_ADMIN));
+        register(user);
+    }
+
+    @Override
+    public void registerClient(User user) {
+        user.setRole(roleServicePort.findRoleByName(RoleContants.ROLE_CLIENT));
+        register(user);
     }
 
     private void register(User user) {
