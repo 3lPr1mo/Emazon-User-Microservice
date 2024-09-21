@@ -2,6 +2,7 @@ package com.bootcamp.pragma.usermicroservice.domain.api.usecase;
 
 import com.bootcamp.pragma.usermicroservice.domain.api.IUserServicePort;
 import com.bootcamp.pragma.usermicroservice.domain.exception.UserAlreadyExistException;
+import com.bootcamp.pragma.usermicroservice.domain.exception.UserNotExistException;
 import com.bootcamp.pragma.usermicroservice.domain.model.User;
 import com.bootcamp.pragma.usermicroservice.domain.spi.IUserPersistencePort;
 import com.bootcamp.pragma.usermicroservice.domain.util.DomainConstants;
@@ -23,5 +24,10 @@ public class UserUseCase implements IUserServicePort {
             throw new UserAlreadyExistException(DomainConstants.USER_ALREADY_EXISTS + user.getEmail());
         }
         userPersistencePort.save(user);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userPersistencePort.findByEmail(email).orElseThrow(() -> new UserNotExistException(DomainConstants.USER_NOT_FOUND));
     }
 }
