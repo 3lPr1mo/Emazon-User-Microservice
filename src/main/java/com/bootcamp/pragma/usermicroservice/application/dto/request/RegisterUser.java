@@ -27,6 +27,7 @@ public class RegisterUser {
     @NotBlank(message = AuthConstants.PHONE_IS_REQUIRED_MSG)
     private String phone;
 
+    @NotBlank(message = AuthConstants.DATE_OF_BIRTH_IS_REQUIRED_MSG)
     private Date dateBirth;
 
     @NotBlank(message = AuthConstants.PASSWORD_IS_REQUIRED_MSG)
