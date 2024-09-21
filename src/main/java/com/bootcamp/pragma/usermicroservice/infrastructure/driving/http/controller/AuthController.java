@@ -42,4 +42,24 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(authHandler.loginUser(loginUser));
     }
 
+    @PostMapping("register/admin")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = SwaggerConstants.OK_STATUS_CODE , description = SwaggerConstants.USER_REGISTERED_SUCCESSFULLY_MSG),
+            @ApiResponse(responseCode = SwaggerConstants.BAD_REQUEST_STATUS_CODE, description = SwaggerConstants.BAD_REQUEST_MSG),
+    })
+    public ResponseEntity<Void> registerAdmin(@Valid @RequestBody RegisterUser registerUser) {
+        authHandler.saveAdmin(registerUser);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("register/client")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = SwaggerConstants.OK_STATUS_CODE , description = SwaggerConstants.USER_REGISTERED_SUCCESSFULLY_MSG),
+            @ApiResponse(responseCode = SwaggerConstants.BAD_REQUEST_STATUS_CODE, description = SwaggerConstants.BAD_REQUEST_MSG),
+    })
+    public ResponseEntity<Void> registerClient(@Valid @RequestBody RegisterUser registerUser) {
+        authHandler.saveClient(registerUser);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 }
