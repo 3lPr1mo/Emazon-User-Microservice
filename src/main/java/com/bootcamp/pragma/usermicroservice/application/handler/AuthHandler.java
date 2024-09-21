@@ -26,4 +26,12 @@ public class AuthHandler {
         return new LoggedUserResponse(token);
     }
 
+    public void saveAdmin(RegisterUser admin) {
+        authServicePort.registerAdmin(authMapper.toUserModel(admin));
+    }
+
+    public void saveClient(RegisterUser client) {
+        authServicePort.registerClient(authMapper.toUserModel(client));
+    }
+
 }
