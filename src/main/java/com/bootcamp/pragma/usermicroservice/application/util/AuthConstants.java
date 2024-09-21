@@ -10,4 +10,5 @@ public class AuthConstants {
     public static final String PASSWORD_IS_REQUIRED_MSG = "Password is required";
     public static final String PHONE_IS_REQUIRED_MSG = "Phone is required";
     public static final String DATE_OF_BIRTH_IS_REQUIRED_MSG = "Date of Birth is required";
+    public static final String EMAIL_IS_NOT_VALID_MSG = "Email is not valid";
 }
