@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,7 +32,7 @@ class AuthUseCaseTest {
     }
 
     @Test
-    public void shouldRegisterAuxWarehouse() {
+    void shouldRegisterAuxWarehouse() {
         User user = UserTestUtil.generateUser();
         Role role = RoleTestUtil.generateRole();
 
@@ -43,5 +42,18 @@ class AuthUseCaseTest {
         authUseCase.registerAuxWarehouse(user);
         verify(roleServicePort).findRoleByName(role.getName());
         verify(authPersistencePort).encodePassword("password");
+    }
+
+    @Test
+    void shouldLoginSuccessfully(){
+        User user = UserTestUtil.generateUser();
+        Role role = RoleTestUtil.generateRole();
+        user.setRole(role);
+        when(userServicePort.findUserByEmail(user.getEmail())).thenReturn(user);
+        when(authPersistencePort.matchPassword(user.getPassword(), user.getPassword())).thenReturn(true);
+        when(authPersistencePort.loginUser(user)).thenReturn("token");
+        authUseCase.login(user.getEmail(), user.getPassword());
+        verify(authPersistencePort).matchPassword(user.getPassword(), user.getPassword());
+        verify(authPersistencePort).loginUser(user);
     }
 }
