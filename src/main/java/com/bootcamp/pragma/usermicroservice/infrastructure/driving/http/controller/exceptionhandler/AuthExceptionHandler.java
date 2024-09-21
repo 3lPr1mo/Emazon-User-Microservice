@@ -6,6 +6,7 @@ import com.bootcamp.pragma.usermicroservice.domain.exception.UserAlreadyExistExc
 import com.bootcamp.pragma.usermicroservice.domain.exception.UserNotExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -45,6 +46,16 @@ public class AuthExceptionHandler {
 
     @ExceptionHandler(UserNotExistException.class)
     public ResponseEntity<ExceptionResponse> handleUserNotExistException(final UserNotExistException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST.toString(),
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(
                 e.getMessage(),
                 HttpStatus.BAD_REQUEST.toString(),
