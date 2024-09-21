@@ -4,6 +4,8 @@ import com.bootcamp.pragma.usermicroservice.domain.api.IAuthServicePort;
 import com.bootcamp.pragma.usermicroservice.domain.api.usecase.AuthUseCase;
 import com.bootcamp.pragma.usermicroservice.domain.spi.IAuthPersistencePort;
 import com.bootcamp.pragma.usermicroservice.infrastructure.driven.jpa.mysql.adapter.AuthAdapter;
+import com.bootcamp.pragma.usermicroservice.infrastructure.driven.jpa.mysql.adapter.JwtAdapter;
+import com.bootcamp.pragma.usermicroservice.infrastructure.driven.jpa.mysql.mapper.IUserEntityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AuthBeanConfiguration {
     private final UserBeanConfiguration userBeanConfiguration;
     private final RoleBeanConfiguration roleBeanConfiguration;
+    private final IUserEntityMapper userEntityMapper;
+    private final JwtAdapter jwtAdapter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -23,7 +27,7 @@ public class AuthBeanConfiguration {
 
     @Bean
     public IAuthPersistencePort authPersistencePort() {
-        return new AuthAdapter(passwordEncoder());
+        return new AuthAdapter(passwordEncoder(), jwtAdapter, userEntityMapper);
     }
 
     @Bean
