@@ -7,6 +7,7 @@ import com.bootcamp.pragma.usermicroservice.application.handler.AuthHandler;
 import com.bootcamp.pragma.usermicroservice.infrastructure.driving.http.controller.util.SwaggerConstants;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class AuthController {
             @ApiResponse(responseCode = SwaggerConstants.OK_STATUS_CODE , description = SwaggerConstants.USER_REGISTERED_SUCCESSFULLY_MSG),
             @ApiResponse(responseCode = SwaggerConstants.BAD_REQUEST_STATUS_CODE, description = SwaggerConstants.BAD_REQUEST_MSG),
     })
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Void> registerAuxWarehouse(@Valid @RequestBody RegisterUser registerUser) {
         authHandler.saveAuxUser(registerUser);
         return ResponseEntity.status(HttpStatus.CREATED).build();
