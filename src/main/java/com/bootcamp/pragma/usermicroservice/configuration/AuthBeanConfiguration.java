@@ -9,8 +9,6 @@ import com.bootcamp.pragma.usermicroservice.infrastructure.driven.jpa.mysql.mapp
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
@@ -19,15 +17,11 @@ public class AuthBeanConfiguration {
     private final RoleBeanConfiguration roleBeanConfiguration;
     private final IUserEntityMapper userEntityMapper;
     private final JwtAdapter jwtAdapter;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    private final ApplicationConfiguration appConfig;
 
     @Bean
     public IAuthPersistencePort authPersistencePort() {
-        return new AuthAdapter(passwordEncoder(), jwtAdapter, userEntityMapper);
+        return new AuthAdapter(appConfig.passwordEncoder(), jwtAdapter, userEntityMapper);
     }
 
     @Bean
