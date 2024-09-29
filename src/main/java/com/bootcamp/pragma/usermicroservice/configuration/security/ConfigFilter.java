@@ -30,7 +30,6 @@ public class ConfigFilter {
                 "/api-doc/swagger-config",
                 "/swagger-ui/**",
                 "/auth/register/admin",
-                "/auth/register/client",
                 "/auth/login"
         );
 
@@ -40,11 +39,14 @@ public class ConfigFilter {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .cors(cors -> cors.disable())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(whitelistRequestMatcher()).permitAll()
                         .requestMatchers("/api-doc/**", "/api-doc/swagger-config", "/swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register/aux").hasAnyAuthority(RoleContants.ROLE_ADMIN)
+                        .requestMatchers(HttpMethod.POST, "/auth/register/client").hasAnyAuthority(RoleContants.ROLE_ADMIN)
+                        .requestMatchers(HttpMethod.GET,"/user/").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
