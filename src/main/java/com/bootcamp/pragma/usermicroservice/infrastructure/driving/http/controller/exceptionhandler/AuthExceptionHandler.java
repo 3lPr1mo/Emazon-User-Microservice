@@ -1,9 +1,6 @@
 package com.bootcamp.pragma.usermicroservice.infrastructure.driving.http.controller.exceptionhandler;
 
-import com.bootcamp.pragma.usermicroservice.domain.exception.PasswordDoNotMatchException;
-import com.bootcamp.pragma.usermicroservice.domain.exception.RoleNotFoundException;
-import com.bootcamp.pragma.usermicroservice.domain.exception.UserAlreadyExistException;
-import com.bootcamp.pragma.usermicroservice.domain.exception.UserNotExistException;
+import com.bootcamp.pragma.usermicroservice.domain.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -56,6 +53,16 @@ public class AuthExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST.toString(),
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(UserIsUnderAgeException.class)
+    public ResponseEntity<ExceptionResponse> handleUserIsUnderAgeException(final UserIsUnderAgeException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(
                 e.getMessage(),
                 HttpStatus.BAD_REQUEST.toString(),
